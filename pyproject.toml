@@ -1,7 +1,7 @@
 [tool.poetry]
 name = "quote-scraper"
 description = "A tool to scrape quotes from web pages"
-version = "0.1.0"
+version = "0.1.0-dev0"
 license = "MIT"
 
 authors = []
@@ -18,6 +18,9 @@ classifiers = [
   "Operating System :: OS Independent",
   "Topic :: Software Development :: Libraries :: Python Modules",
 ]
+
+[tool.poetry.scripts]
+qscrape = "quote_scraper.cli:main"
 
 [tool.poetry.dependencies]
 python = "^3.8"
@@ -36,12 +39,14 @@ safety = "^2.3.0"
 pytest = "^7.3"
 pytest-cov = "^4.0"
 pytest-randomly = "^3.12"
+isort = "^5.12.0"
+black = "^23.3.0"
 
 [tool.poetry.group.docs]
 optional = true
 
 [tool.poetry.group.docs.dependencies]
-sphinx = "^5.3"
+sphinx = "^7.0"
 sphinx-autodoc-typehints = "^1.23"
 m2r2 = "^0.3"
 tomli = "^2.0"
