@@ -1,16 +1,13 @@
 """Top-level module scraper for Quote Scraper."""
 
-import os
 from pathlib import Path
-from time import time
-from typing import Any, Optional, Tuple, Union, cast
+from typing import Tuple, Union
 
 from quote_scraper.cache import cache_url
 from quote_scraper.errors import QuoteScrapeImportError, raise_fnfe
 from quote_scraper.files import get_import_path
 from quote_scraper.process import process_cached
 from quote_scraper.quote import QdataList
-from quote_scraper.settings import settings
 from quote_scraper.validate import url_validator
 
 

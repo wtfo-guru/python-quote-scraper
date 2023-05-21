@@ -24,7 +24,7 @@ def print_version(ctx: Context, aparam: AnyStr, avalue: AnyStr) -> None:
     """
     if not avalue or ctx.resilient_parsing:
         return
-    print("Not implemented yet!")
+    click.echo("Not implemented yet!")
     ctx.exit()
 
 
@@ -63,5 +63,4 @@ def main(cache, debug, verbose):
 
 if __name__ == "__main__":  # pragma no cover
     sys.exit(main())
-
 # vim:ft=py noqa: E800

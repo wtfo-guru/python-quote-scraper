@@ -11,7 +11,7 @@ from typing import List, Union
 import requests
 
 from quote_scraper.constants import FAKE_AGENT, KQDATUMS, REQUEST_TIMEOUT
-from quote_scraper.files import get_import_path, get_stamped_import_path
+from quote_scraper.files import get_stamped_import_path
 from quote_scraper.kinds import StrAnyDict
 from quote_scraper.quote import QdataList
 from quote_scraper.settings import settings

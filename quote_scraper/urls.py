@@ -45,7 +45,7 @@ def is_known_url(url: str) -> Qsites:  # noqa: WPS231
             fruit = Qsites.brainy_qod
         else:
             raise QuoteScrapeImportError(
-                "Unknown brainyquote.com path: {0}".format(path)
+                "Unknown brainyquote.com path: {0}".format(path),
             )
     else:
         raise QuoteScrapeImportError("Unknown import netloc: {0}".format(netloc))
