@@ -1,9 +1,22 @@
 """Top-level module cache for Quote Scraper."""
 
-from typing import Union
+import json
+import glob
+import os
+import tempfile
+import requests
 
-from quote_scraper.urls import is_known_url, Qsites
+from http import HTTPStatus
+from pathlib import Path
+from typing import List, Union
+
 from quote_scraper.cache import cache_url_type_one
+from quote_scraper.constants import KQDATUMS, FAKE_AGENT, REQUEST_TIMEOUT
+from quote_scraper.files import get_stamped_import_path
+from quote_scraper.kinds import StrAnyDict
+from quote_scraper.quote import QdataList
+from quote_scraper.settings import Settings
+from quote_scraper.urls import is_known_url, Qsites
 
 def cache_datums(datums: QdataList) -> str:
     """Cache QdataList."""
@@ -18,7 +31,7 @@ def cache_datums(datums: QdataList) -> str:
 def get_cached_names() -> List[str]:
     """Return list of available cached quotes."""
     cached_names: List[str] = []
-    mask = "{0}/import/todo/*.json".format(app.static_folder)
+    mask = "{0}/import/todo/*.json".format(Settings.cache_folder)
     for cnm in glob(mask):
         cached_names.append(Path(cnm).name)
     return cached_names
