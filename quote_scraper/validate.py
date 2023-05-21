@@ -2,6 +2,7 @@
 
 from urllib.parse import urlparse
 
+
 def url_validator(url: str) -> bool:
     """Validate url."""
     try:

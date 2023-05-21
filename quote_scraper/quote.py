@@ -1,8 +1,8 @@
 """Top-level module Quote for Quote-Scraper."""
 
 import re
-
 from typing import Optional, Union
+
 from quote_scraper import constants
 from quote_scraper.kinds import StrAnyDict
 

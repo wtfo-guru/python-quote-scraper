@@ -1,18 +1,21 @@
 """Top-level module urls for Quote Scraper."""
 
 import re
-
-from typing import cast, Enum, Union
+from enum import Enum
+from typing import Union, cast
 from urllib.parse import urlparse
 
 from quote_scraper.errors import QuoteScrapeImportError
 
+
 class Qsites(Enum):
     """Class respresting scrapable sites."""
 
+    unknown = 0
     inspiring_quotes = 1
     inspiring_qod = 2
     brainy_qod = 3
+
 
 def strorbytes_tostr(uvar: Union[str, bytes]) -> str:
     """Converts bytes to str."""
@@ -25,11 +28,13 @@ def strorbytes_tostr(uvar: Union[str, bytes]) -> str:
         "Variable uvar type is {0}. Expected str or bytes.".format(str(utyp)),
     )
 
+
 def is_known_url(url: str) -> Qsites:  # noqa: WPS231
     """Return enum of matching site."""
     parts = urlparse(url)
     path = strorbytes_tostr(parts.path)
     netloc = strorbytes_tostr(parts.netloc)
+    fruit = Qsites.unknown
     if re.search("inspiringquotes.com", netloc):
         if len(path) > 1:
             fruit = Qsites.inspiring_quotes
@@ -39,7 +44,9 @@ def is_known_url(url: str) -> Qsites:  # noqa: WPS231
         if re.search("quote_of_the_day", path):
             fruit = Qsites.brainy_qod
         else:
-            raise QuoteScrapeImportError("Unknown brainyquote.com path: {0}".format(path))
+            raise QuoteScrapeImportError(
+                "Unknown brainyquote.com path: {0}".format(path)
+            )
     else:
         raise QuoteScrapeImportError("Unknown import netloc: {0}".format(netloc))
     return fruit
