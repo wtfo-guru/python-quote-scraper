@@ -6,7 +6,7 @@ import tempfile
 from glob import glob
 from http import HTTPStatus
 from pathlib import Path
-from typing import List, Union
+from typing import Dict, List, Union
 
 import requests
 
@@ -20,7 +20,7 @@ from quote_scraper.urls import Qsites, is_known_url
 
 def cache_datums(datums: QdataList) -> str:
     """Cache QdataList."""
-    cache_data: dict[str, list[StrAnyDict]] = {KQDATUMS: []}
+    cache_data: Dict[str, List[StrAnyDict]] = {KQDATUMS: []}
     for dat in datums:
         cache_data[KQDATUMS].append(dat.__dict__)
     fp = get_stamped_import_path()

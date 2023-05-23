@@ -1,7 +1,7 @@
 """Top-level module scraper for Quote Scraper."""
 
 from pathlib import Path
-from typing import Tuple, Union
+from typing import List, Tuple, Union
 
 from quote_scraper.cache import cache_url
 from quote_scraper.errors import QuoteScrapeImportError, raise_fnfe
@@ -36,7 +36,7 @@ def scrape_cached(src_nm: str) -> Tuple[QdataList, str]:
     return process_cached(src_str)
 
 
-def scraped(source: str, errors: list[str]) -> None:
+def scraped(source: str, errors: List[str]) -> None:
     """Move imported file to done subdirectory."""
     sp = Path(source)
     if errors:

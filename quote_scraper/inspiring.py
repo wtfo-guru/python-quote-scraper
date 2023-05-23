@@ -1,5 +1,6 @@
 """Top-level module for Wtf Quotes."""
 import re
+from typing import Dict
 
 from bs4 import BeautifulSoup
 
@@ -8,7 +9,7 @@ from quote_scraper.kinds import StrAnyDict
 from quote_scraper.quote import QdataList, Quote
 
 
-def scrape_inspiring_qod(cdata: dict[str, str]) -> QdataList:
+def scrape_inspiring_qod(cdata: Dict[str, str]) -> QdataList:
     """Scrape inspring quote of the day."""
     qdatums: QdataList = []
     ok = False
@@ -26,14 +27,14 @@ def scrape_inspiring_qod(cdata: dict[str, str]) -> QdataList:
     return qdatums
 
 
-def scrape_inspiringquotes(cdata: dict[str, str]) -> QdataList:  # noqa: WPS210
+def scrape_inspiringquotes(cdata: Dict[str, str]) -> QdataList:  # noqa: WPS210
     """Scrape inspring quotes."""
     qnbr = 0
     soup = BeautifulSoup(cdata.get("html"), "html.parser")
     author = cdata.get("author", "Unknown")
     category = cdata.get("category", "None")
     qdatums: QdataList = []
-    quotes: dict[str, int] = {}
+    quotes: Dict[str, int] = {}
     for bq in soup.find_all("blockquote"):
         qnbr += 1
         qpost: StrAnyDict = {KCATEGORY: category}

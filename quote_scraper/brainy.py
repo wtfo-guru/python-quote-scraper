@@ -1,5 +1,6 @@
 """Top-level module for Wtf Quotes."""
 import re
+from typing import Dict
 
 from bs4 import BeautifulSoup
 
@@ -9,7 +10,7 @@ from quote_scraper.quote import QdataList, Quote
 from quote_scraper.settings import settings
 
 
-def scrape_brainy_qod(cdata: dict[str, str]) -> QdataList:  # noqa: WPS210 WPS231
+def scrape_brainy_qod(cdata: Dict[str, str]) -> QdataList:  # noqa: WPS210 WPS231
     """Scrape brainyquotes quote of the day page."""
     qnbr = 0
     soup = BeautifulSoup(cdata.get("html"), "html.parser")

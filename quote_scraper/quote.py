@@ -1,7 +1,7 @@
 """Top-level module Quote for Quote-Scraper."""
 
 import re
-from typing import Optional, Union
+from typing import List, Optional, Union
 
 from quote_scraper import constants
 from quote_scraper.kinds import StrAnyDict
@@ -86,4 +86,4 @@ class Quote(object):  # noqa: WPS230
         self.qid = self.validate_int(int(self.qid), "qid", 0)
 
 
-QdataList = list[Quote]
+QdataList = List[Quote]
