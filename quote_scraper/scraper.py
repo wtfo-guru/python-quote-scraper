@@ -12,7 +12,6 @@ from quote_scraper.validate import url_validator
 
 
 def scrape_quotes(  # noqa: C901 WPS231
-    self,
     author: str,
     category: str,
     source: str,
