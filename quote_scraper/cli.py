@@ -35,12 +35,14 @@ def print_version(ctx: Context, aparam: AnyStr, avalue: AnyStr) -> None:
 @click.option(
     "--author",
     "-a",
-    default="unkown",
+    default="unknown",
     help="Specify author of quotes.",
 )
 @click.option(
     "--brainy",
     "-b",
+    is_flag=True,
+    show_default=True,
     default=False,
     help="Specify scrape brainyquotes of the day.",
 )
@@ -64,6 +66,8 @@ def print_version(ctx: Context, aparam: AnyStr, avalue: AnyStr) -> None:
 @click.option(
     "--inspiring",
     "-i",
+    is_flag=True,
+    show_default=True,
     default=False,
     help="Specify scrape inquiring quote of the day.",
 )

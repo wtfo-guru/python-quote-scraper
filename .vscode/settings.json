@@ -7,5 +7,5 @@
     "python.testing.unittestEnabled": false,
     "python.testing.pytestEnabled": true,
     "python.formatting.provider": "black",
-    "ansible.python.interpreterPath": "/data/jim/development/python/quote-scraper/.venv/bin/python"
+    "ansible.python.interpreterPath": "{workspaceFolder}/.venv/bin/python"
 }
