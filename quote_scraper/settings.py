@@ -30,7 +30,7 @@ class Ajustes(object):
         cfg: Path = Path(
             kwargs.pop(
                 "cfgfn",
-                Path.home() / ".cache" / "quote-scraper.yaml",
+                Path.home() / ".config" / "quote-scraper.yaml",
             ),
         )
         if cfg.is_file():
@@ -38,7 +38,9 @@ class Ajustes(object):
                 self.config = yaml.safe_load(yfile)
         else:
             self.config = {}
+        if "brainy_qod" not in self.config:
             self.config["brainy_qod"] = "https://www.brainyquote.com/quote_of_the_day"
+        if "inspiring_qod" not in self.config:
             self.config["inspiring_qod"] = "https://www.inspiringquotes.com/"
 
     def _get_logger(self) -> Any:

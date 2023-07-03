@@ -8,7 +8,7 @@ from quote_scraper.settings import settings
 
 def get_import_path(subd: str) -> Path:
     """Return specified import subdirectory path."""
-    sf = settings.cachedir
+    sf = Path(settings.cachedir)
     return sf / "import" / subd
 
 
