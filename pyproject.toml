@@ -1,7 +1,7 @@
 [tool.poetry]
 name = "quote-scraper"
 description = "A tool to scrape quotes from web pages"
-version = "0.1.0-dev2"
+version = "0.1.0-dev3"
 license = "MIT"
 
 authors = []
@@ -24,7 +24,7 @@ qscrape = "quote_scraper.cli:main"
 
 [tool.poetry.dependencies]
 python = "^3.8"
-click = "^8.1.4"
+click = "^8.1.5"
 bs4 = "^0.0.1"
 loguru = "^0.7.0"
 pyyaml = "^6.0"
