@@ -31,7 +31,7 @@ def print_version(ctx: Context, aparam: AnyStr, avalue: AnyStr) -> None:
     ctx.exit()
 
 
-@click.command()  # type:ignore [arg-type]
+@click.command()
 @click.option(
     "--author",
     "-a",
@@ -119,7 +119,5 @@ def main(  # noqa: WPS211, WPS216
 
 
 if __name__ == "__main__":  # pragma no cover
-    sys.exit(main())  # type: ignore [misc]
-# TODO: remove two type: ignores when click > 8.1.4
-#       see https://github.com/pallets/click/issues/2558
+    sys.exit(main())
 # vim:ft=py noqa: E800
