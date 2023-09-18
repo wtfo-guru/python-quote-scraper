@@ -26,7 +26,7 @@ qscrape = "quote_scraper.cli:main"
 python = "^3.8"
 click = "^8.1.6"
 bs4 = "^0.0.1"
-loguru = "^0.7.1"
+loguru = "^0.7.2"
 pyyaml = "^6.0"
 
 [tool.poetry.group.test.dependencies]
