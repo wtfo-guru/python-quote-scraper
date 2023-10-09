@@ -17,13 +17,20 @@ classifiers = [
   "Intended Audience :: Developers",
   "Operating System :: OS Independent",
   "Topic :: Software Development :: Libraries :: Python Modules",
+  "License :: OSI Approved :: MIT License",
+  "Programming Language :: Python :: 3 :: Only",
+  "Programming Language :: Python :: 3.8",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
 ]
 
 [tool.poetry.scripts]
 qscrape = "quote_scraper.cli:main"
 
 [tool.poetry.dependencies]
-python = "^3.8"
+python = ">=3.8.1,<4.0"
 click = "^8.1.6"
 bs4 = "^0.0.1"
 loguru = "^0.7.2"
@@ -31,13 +38,10 @@ pyyaml = "^6.0"
 
 [tool.poetry.group.test.dependencies]
 mypy = "^1.5"
-
-wemake-python-styleguide = "^0.17"
+wemake-python-styleguide = "^0.18"
 flake8-pytest-style = "^1.6"
 nitpick = "^0.34"
-
 safety = "^2.3"
-
 pytest = "^7.4"
 pytest-cov = "^4.1"
 pytest-randomly = "^3.12"
