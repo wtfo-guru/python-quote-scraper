@@ -30,7 +30,7 @@ unit:
 package:
 	poetry check
 	poetry run pip check
-	poetry run safety check -i 51499 --short-report
+	poetry run safety check --short-report
 
 .PHONY: test
 test: lint package unit
