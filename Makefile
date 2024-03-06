@@ -1,6 +1,10 @@
 SHELL:=/usr/bin/env bash
 PKGDIR = quote_scraper
 
+.PHONY: update
+update:
+	poetry update --with test --with docs
+
 .PHONY: format
 format:
 	poetry run isort $(PKGDIR) tests
