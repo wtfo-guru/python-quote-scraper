@@ -7,7 +7,7 @@ from quote_scraper import constants
 from quote_scraper.kinds import StrAnyDict
 
 
-class Quote(object):  # noqa: WPS230
+class Quote:  # noqa: WPS230
     """A class to represent Quotation."""
 
     qid: int

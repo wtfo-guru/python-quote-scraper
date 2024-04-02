@@ -7,7 +7,7 @@ from typing import Any, Dict, Optional
 import yaml
 
 
-class Ajustes(object):
+class Ajustes:
     """Settings for Quote Scraper."""
 
     cachedir: Path
