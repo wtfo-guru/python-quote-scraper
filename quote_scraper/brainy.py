@@ -1,4 +1,5 @@
 """Top-level module for Wtf Quotes."""
+
 import re
 from typing import Dict
 
