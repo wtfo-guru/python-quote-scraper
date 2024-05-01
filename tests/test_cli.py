@@ -5,7 +5,7 @@ from quote_scraper import cli
 from quote_scraper.constants import VERSION
 
 
-@pytest.fixture()
+@pytest.fixture
 def runner():
     """Function runner."""
     return CliRunner()
