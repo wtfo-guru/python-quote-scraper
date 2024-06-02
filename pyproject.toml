@@ -51,11 +51,11 @@ pytest-cov = ">=4,<6"
 pytest-randomly = "^3.12"
 isort = "^5.13"
 black = ">=22.12,<25.0"
-types-requests = "^2.31.0.20240125"
 types-pyyaml = "^6.0.12.12"
 wheel = "^0.43"
 pytest-click = "^1.1.0"
 doc8 = "^1.0"
+types-requests = "^2.32.0.20240602"
 
 [tool.poetry.group.docs]
 optional = true
