@@ -39,6 +39,10 @@ package:
 	poetry run pip check
 	poetry run safety check --full-report
 
+.PHONY: safety
+safety:
+	poetry run safety check --full-report
+
 test: lint package unit
 
 publish: clean-build test
