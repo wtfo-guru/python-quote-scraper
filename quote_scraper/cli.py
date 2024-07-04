@@ -2,33 +2,14 @@
 
 import sys
 from pathlib import Path
-from typing import AnyStr, List, Tuple
+from typing import List, Tuple
 
 import click
-from click.core import Context
 
 from quote_scraper.constants import VERSION
 from quote_scraper.quote import QdataList
 from quote_scraper.scraper import scrape_quotes
 from quote_scraper.settings import settings
-
-
-def print_version(ctx: Context, aparam: AnyStr, avalue: AnyStr) -> None:
-    """Prints package version and exits.
-
-    Parameters
-    ----------
-    ctx : Context
-        click context object
-    aparam : AnyStr
-        dunno
-    avalue : AnyStr
-        dunno
-    """
-    if not avalue or ctx.resilient_parsing:
-        return
-    click.echo(VERSION)
-    ctx.exit()
 
 
 @click.command()
@@ -83,15 +64,7 @@ def print_version(ctx: Context, aparam: AnyStr, avalue: AnyStr) -> None:
     default=False,
     help="Specify verbose mode, default: False",
 )
-@click.option(
-    "-V",
-    "--version",
-    is_flag=True,
-    expose_value=False,
-    callback=print_version,
-    is_eager=True,
-    help="Show version and exit",
-)
+@click.version_option(VERSION)
 def main(  # noqa: WPS211, WPS216
     author,
     brainy,

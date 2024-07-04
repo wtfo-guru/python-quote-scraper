@@ -16,7 +16,7 @@ def test_cli_version(runner):
     test_result = runner.invoke(cli.main, ["--version"])
     assert not test_result.exception
     assert test_result.exit_code == 0
-    assert test_result.output.strip() == VERSION
+    assert test_result.output.strip() == "main, version {0}".format(VERSION)
 
 
 # def test_cli_with_option(runner):
