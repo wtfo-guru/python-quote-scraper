@@ -1,3 +1,4 @@
+<!-- markdownlint-configure-file { "MD024": false } -->
 # Changelog
 
 All notable changes to this project will be documented in this file.
@@ -7,15 +8,25 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added (2024-08-01)
+
+- filelock (3.12.4)
+
+### Changed (2024-08-01)
+
+- exceptiongroup (1.2.1 -> 1.2.2)
+- cryptography (42.0.8 -> 43.0.0)
+- identify (2.5.36 -> 2.6.0)
+
 ### Added (2024-07-04)
 
-- Added shellingham (1.5.4)
-- Added typer (0.12.3)
+- shellingham (1.5.4)
+- typer (0.12.3)
 
 ### Changed (2024-07-04)
 
 - Use click.version_option
-- Updated markdown-it-py (2.2.0 -> 3.0.0)
-- Updated pygments (2.15.1 -> 2.18.0)
-- Updated rich (13.3.5 -> 13.7.1)
-- Updated typing-extensions (4.6.0 -> 4.12.2)
+- markdown-it-py (2.2.0 -> 3.0.0)
+- pygments (2.15.1 -> 2.18.0)
+- rich (13.3.5 -> 13.7.1)
+- typing-extensions (4.6.0 -> 4.12.2)
