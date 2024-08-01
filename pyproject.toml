@@ -1,7 +1,7 @@
 [tool.poetry]
 name = "quote-scraper"
 description = "A tool to scrape quotes from web pages"
-version = "0.1.0-dev10"
+version = "0.1.0-dev11"
 license = "MIT"
 
 authors = ["Quien Sabe <qs5779@mail.com>"]
