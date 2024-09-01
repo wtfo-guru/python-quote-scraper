@@ -26,5 +26,5 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - exceptiongroup (1.2.1 -> 1.2.2)
 - cryptography (42.0.8 -> 43.0.0)
 - identify (2.5.36 -> 2.6.0)
-- CI test with 3.13 python, 1.8.3 poetry
+- CI test 1.8.3 poetry
 - poetry update
