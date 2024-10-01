@@ -54,7 +54,7 @@ black = ">=22.12,<25.0"
 types-pyyaml = "^6.0.12.20240808"
 wheel = "^0.43"
 pytest-click = "^1.1.0"
-doc8 = "^1.0"
+doc8 = "^1.1"
 types-requests = "^2.32.0.20240602"
 
 [tool.poetry.group.docs]
