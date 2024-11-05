@@ -1,6 +1,6 @@
 """Top-level module constants for Quote-Scraper."""
 
-VERSION = "0.1.1-dev0"
+VERSION = "0.1.1-dev1"
 KCATEGORY = "category"
 KAUTHOR = "author"
 KQUOTE = "quote"
