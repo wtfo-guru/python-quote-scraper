@@ -64,7 +64,7 @@ optional = true
 sphinx = ">=5.2,<8.0"
 sphinx-autodoc-typehints = ">=1.19,<3.0"
 m2r2 = "^0.3"
-tomli = "^2.0"
+tomli = "^2.2"
 
 
 
