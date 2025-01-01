@@ -34,7 +34,7 @@ qscrape = "quote_scraper.cli:main"
 python = ">=3.9,<4.0"
 click = "^8.1.0"
 bs4 = "^0.0.2"
-loguru = "^0.7.2"
+loguru = "^0.7.3"
 pyyaml = "^6.0"
 
 [tool.poetry.group.test]
