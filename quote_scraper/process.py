@@ -7,10 +7,7 @@ from typing import Tuple, cast
 from quote_scraper import constants
 from quote_scraper.brainy import scrape_brainy_qod
 from quote_scraper.cache import cache_datums
-from quote_scraper.inspiring import (
-    scrape_inspiring_qod,
-    scrape_inspiringquotes,
-)
+from quote_scraper.inspiring import scrape_inspiring_qod, scrape_inspiringquotes
 from quote_scraper.kinds import StrAnyDict
 from quote_scraper.quote import QdataList, Quote
 from quote_scraper.urls import Qsites, is_known_url
