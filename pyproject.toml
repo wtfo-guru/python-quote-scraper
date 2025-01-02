@@ -1,7 +1,7 @@
 [tool.poetry]
 name = "quote-scraper"
 description = "A tool to scrape quotes from web pages"
-version = "0.1.1-dev2"
+version = "0.1.1-dev3"
 license = "MIT"
 
 authors = ["Quien Sabe <qs5779@mail.com>"]
@@ -19,10 +19,10 @@ classifiers = [
   "Topic :: Software Development :: Libraries :: Python Modules",
   "License :: OSI Approved :: MIT License",
   "Programming Language :: Python :: 3 :: Only",
-  "Programming Language :: Python :: 3.9",
   "Programming Language :: Python :: 3.10",
   "Programming Language :: Python :: 3.11",
   "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
   "Topic :: Utilities",
   "Typing :: Typed",
 ]
@@ -31,7 +31,7 @@ classifiers = [
 qscrape = "quote_scraper.cli:main"
 
 [tool.poetry.dependencies]
-python = ">=3.9,<4.0"
+python = ">=3.10,<4.0"
 click = "^8.1.0"
 bs4 = "^0.0.2"
 loguru = "^0.7.2"
@@ -42,7 +42,7 @@ optional = true
 
 [tool.poetry.group.test.dependencies]
 mypy = "^1.11"
-wemake-python-styleguide = "^0.19"
+wemake-python-styleguide = "^1.0.0"
 flake8-pytest-style = ">=1.6,<3.0"
 nitpick = "^0.35"
 safety = ">=2.3,<4.0"
@@ -68,10 +68,3 @@ tomli = "^2.0"
 [build-system]
 requires = ["poetry-core>=1.5.0"]
 build-backend = "poetry.core.masonry.api"
-
-
-[tool.nitpick]
-style = [
-  "https://raw.githubusercontent.com/wemake-services/wemake-python-styleguide/master/styles/nitpick-style-wemake.toml",
-  "./.nitpick-wtf-style.toml",
-]
