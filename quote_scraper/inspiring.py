@@ -1,21 +1,25 @@
 """Top-level module for Wtf Quotes."""
 
 import re
-from typing import Dict
+from typing import Dict, Tuple
 
-from bs4 import BeautifulSoup
+from bs4 import Tag
 
 from quote_scraper.constants import KAUTHOR, KCATEGORY, KQUOTE
+from quote_scraper.foos import get_soup
 from quote_scraper.kinds import StrAnyDict
 from quote_scraper.quote import QdataList, Quote
 
 
 def scrape_inspiring_qod(cdata: Dict[str, str]) -> QdataList:
-    """Scrape inspring quote of the day."""
+    """Scrape inspiring quote of the day."""
+    # TODO: Handle cases where HTML might not contain a quote of the day.
+    # TODO: Handle cases where HTML might not contain an author.
+    # TODO: Handle cases where HTML might not contain a category.
     qdatums: QdataList = []
     ok = False
     qpost: StrAnyDict = {KCATEGORY: cdata.get("category", "None")}
-    soup = BeautifulSoup(cdata.get("html"), "html.parser")
+    soup = get_soup(cdata)
     div = soup.find("div", {"class": "IQDailyInspiration__quoteContainer"})
     if div is not None:
         qpost[KQUOTE] = div.get_text().strip()
@@ -28,10 +32,18 @@ def scrape_inspiring_qod(cdata: Dict[str, str]) -> QdataList:
     return qdatums
 
 
-def scrape_inspiringquotes(cdata: Dict[str, str]) -> QdataList:  # noqa: WPS210
+def _get_author(tag: Tag, quote: str, default: str) -> Tuple[str, str]:
+    em = tag.find("em")
+    if em:
+        author = em.get_text().strip()
+        return quote.replace(author, ""), author
+    return quote, default
+
+
+def scrape_inspiring_quotes(cdata: Dict[str, str]) -> QdataList:  # noqa: WPS210
     """Scrape inspring quotes."""
     qnbr = 0
-    soup = BeautifulSoup(cdata.get("html"), "html.parser")
+    soup = get_soup(cdata)
     author = cdata.get("author", "Unknown")
     category = cdata.get("category", "None")
     qdatums: QdataList = []
@@ -40,13 +52,8 @@ def scrape_inspiringquotes(cdata: Dict[str, str]) -> QdataList:  # noqa: WPS210
         qnbr += 1
         qpost: StrAnyDict = {KCATEGORY: category}
         e_quote = bq.get_text().strip()
-        em = bq.find("em")
-        if em:
-            e_author = em.get_text().strip()
-            e_quote = e_quote.replace(e_author, "")
-        else:
-            e_author = author
-
+        if isinstance(bq, Tag):
+            e_quote, e_author = _get_author(bq, e_quote, author)
         e_quote = e_quote.replace(" / ", " ")
         # To add space after dot or comma using regular expression (re):
         e_quote = re.sub(r"(?<=[.,])(?=[^\s])", " ", e_quote)

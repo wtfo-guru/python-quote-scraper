@@ -1,7 +1,7 @@
 [tool.poetry]
 name = "quote-scraper"
 description = "A tool to scrape quotes from web pages"
-version = "0.1.1-dev3"
+version = "0.1.1"
 license = "MIT"
 
 authors = ["Quien Sabe <qs5779@mail.com>"]
@@ -33,9 +33,9 @@ qscrape = "quote_scraper.cli:main"
 [tool.poetry.dependencies]
 python = ">=3.10,<4.0"
 click = "^8.1.0"
-bs4 = "^0.0.2"
 loguru = "^0.7.2"
 pyyaml = "^6.0"
+beautifulsoup4 = "^4.13.3"
 
 [tool.poetry.group.test]
 optional = true
@@ -49,8 +49,8 @@ safety = ">=2.3,<4.0"
 pytest = ">=7.4,<9.0"
 pytest-cov = ">=4,<6"
 pytest-randomly = "^3.12"
-isort = "^5.13"
-black = ">=22.12,<25.0"
+isort = "^6.0"
+black = "^25.0"
 types-pyyaml = "^6.0.12.20240808"
 pytest-click = "^1.1.0"
 doc8 = "^1.0"
@@ -60,7 +60,7 @@ types-requests = "^2.32.0.20240602"
 optional = true
 
 [tool.poetry.group.docs.dependencies]
-sphinx = ">=5.2,<8.0"
+sphinx = "^8.0"
 sphinx-autodoc-typehints = ">=1.19,<3.0"
 m2r2 = "^0.3"
 tomli = "^2.0"
@@ -68,3 +68,6 @@ tomli = "^2.0"
 [build-system]
 requires = ["poetry-core>=1.5.0"]
 build-backend = "poetry.core.masonry.api"
+
+[tool.nitpick]
+style = "https://www.wtfo-guru.com/.well-known/nitpick-wtf-style.toml"

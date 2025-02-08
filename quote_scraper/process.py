@@ -7,7 +7,7 @@ from typing import Tuple, cast
 from quote_scraper import constants
 from quote_scraper.brainy import scrape_brainy_qod
 from quote_scraper.cache import cache_datums
-from quote_scraper.inspiring import scrape_inspiring_qod, scrape_inspiringquotes
+from quote_scraper.inspiring import scrape_inspiring_qod, scrape_inspiring_quotes
 from quote_scraper.kinds import StrAnyDict
 from quote_scraper.quote import QdataList, Quote
 from quote_scraper.urls import Qsites, is_known_url
@@ -29,7 +29,7 @@ def process_cached(source: str) -> Tuple[QdataList, str]:  # noqa: WPS210 C901 W
             raise KeyError("Missing required key: {0}".format(key))
     site = is_known_url(cast(str, cdata.get("url")))
     if site == Qsites.inspiring_quotes:
-        fruit = scrape_inspiringquotes(cdata)
+        fruit = scrape_inspiring_quotes(cdata)
     elif site == Qsites.inspiring_qod:
         fruit = scrape_inspiring_qod(cdata)
     elif site == Qsites.brainy_qod:
