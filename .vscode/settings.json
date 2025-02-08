@@ -9,6 +9,8 @@
     "python.formatting.provider": "black",
     "ansible.python.interpreterPath": "{workspaceFolder}/.venv/bin/python",
     "cSpell.words": [
+        "KCATEGORY",
+        "KQUOTE",
         "pygments",
         "Qdata",
         "shellingham",
