@@ -60,7 +60,7 @@ publish-test: clean-build test
 build: clean-build test
 	manage-tag.sh -u v$(PROJECT_VERSION)
 	poetry build
-	sync-wheels.sh dist/$(PROJECT_NAME)-$(PROJECT_VERSION)-py3-none-any.whl $(WHEELS)
+	sync-wheels.sh dist/$(PACKAGE_DIR)-$(PROJECT_VERSION)-py3-none-any.whl
 
 .PHONY: docs
 docs:

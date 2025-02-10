@@ -14,8 +14,8 @@ class Quote:  # noqa: WPS230
     used: int
     author: str
     category: str
-    reference: str
     quote: str
+    reference: str
     julian: Optional[int]
     blessed: bool
 
