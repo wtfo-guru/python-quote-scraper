@@ -22,7 +22,7 @@ def _extract_category(q_post: StrAnyDict, div: Tag) -> None:
             RE_QOD.sub("", category.get_text()).strip().replace("Funny", "Humor")
         )
         settings.logger.debug("category: {0}".format(q_post[KCATEGORY]))
-    if not q_post[KCATEGORY]:
+    if KCATEGORY not in q_post:
         q_post[KCATEGORY] = "None"
 
 
