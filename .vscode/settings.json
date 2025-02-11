@@ -13,6 +13,8 @@
         "KQUOTE",
         "pygments",
         "Qdata",
+        "resultado",
+        "resultados",
         "shellingham",
         "typer"
     ]

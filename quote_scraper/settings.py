@@ -16,23 +16,14 @@ class Ajustes:
     verbose: bool
     config: Dict[str, str]
 
-    def initialize(self, **kwargs) -> None:
+    def __init__(self) -> None:
+        """Initialize settings."""
         """Constructs a new Quote Scraper."""
-        self.debug = kwargs.pop("debug", False)
-        self.verbose = kwargs.pop("verbose", False)
-        self.cachedir = kwargs.pop(
-            "cachedir",
-            Path.home() / ".cache" / "quote-scraper",
-        )
-        logger: Optional[Any] = kwargs.pop("logger", None)
-        if logger is None:
-            self.logger = self._get_logger()
-        cfg: Path = Path(
-            kwargs.pop(
-                "cfgfn",
-                Path.home() / ".config" / "quote-scraper.yaml",
-            ),
-        )
+        self.debug = False
+        self.verbose = False
+        self.cachedir = Path.home() / ".cache" / "quote-scraper"
+        self.logger = self._get_logger()
+        cfg: Path = Path.home() / ".config" / "quote-scraper.yaml"
         if cfg.is_file():
             with open(cfg, "r") as yfile:
                 self.config = yaml.safe_load(yfile)
@@ -42,6 +33,22 @@ class Ajustes:
             self.config["brainy_qod"] = "https://www.brainyquote.com/quote_of_the_day"
         if "inspiring_qod" not in self.config:
             self.config["inspiring_qod"] = "https://www.inspiringquotes.com/"
+
+    def initialize(self, **kwargs) -> None:
+        """Constructs a new Quote Scraper."""
+        self.debug = kwargs.pop("debug", False)
+        self.verbose = kwargs.pop("verbose", False)
+        self.cachedir = kwargs.pop(
+            "cachedir",
+            Path.home() / ".cache" / "quote-scraper",
+        )
+        logger: Optional[Any] = kwargs.pop("logger", None)
+        if logger is not None:
+            self.logger = logger
+        cfg = kwargs.get("cfgfn", "")
+        if cfg:
+            with open(cfg, "r") as yfile:
+                self.config = yaml.safe_load(yfile)
 
     def _get_logger(self) -> Any:
         from loguru import logger  # noqa: WPS433

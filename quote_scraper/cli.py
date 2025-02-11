@@ -1,5 +1,6 @@
 """Top-level module cli for Quote Scraper."""
 
+import pprint
 import sys
 from pathlib import Path
 from typing import List, Tuple
@@ -87,7 +88,7 @@ def main(  # noqa: WPS211, WPS216
     resultados: List[Tuple[QdataList, str]] = []
     for source in urls:
         resultados.append(scrape_quotes(author, category, source))
-    print(resultados)  # noqa: WPS421
+    pprint.pp(resultados)
     return 0
 
 

@@ -6,28 +6,31 @@ import tempfile
 from glob import glob
 from http import HTTPStatus
 from pathlib import Path
-from typing import Dict, List, Union
+from typing import Dict, List, Tuple, Union, cast
 
 import requests
 
+from quote_scraper.brainy import scrape_brainy_qod
 from quote_scraper.constants import (
     FAKE_AGENT,
-    KQDATUMS,
+    K_QUOTE_DATUMS,
+    KEY_URL,
     REQUEST_TIMEOUT,
     SCRAPEOPS_TIMEOUT,
 )
 from quote_scraper.files import get_stamped_import_path
+from quote_scraper.inspiring import scrape_inspiring_qod, scrape_inspiring_quotes
 from quote_scraper.kinds import StrAnyDict
-from quote_scraper.quote import QdataList
+from quote_scraper.quote import QdataList, Quote
 from quote_scraper.settings import settings
 from quote_scraper.urls import Qsites, is_known_url
 
 
 def cache_datums(datums: QdataList) -> str:
     """Cache QdataList."""
-    cache_data: Dict[str, List[StrAnyDict]] = {KQDATUMS: []}
+    cache_data: Dict[str, List[StrAnyDict]] = {K_QUOTE_DATUMS: []}
     for dat in datums:
-        cache_data[KQDATUMS].append(dat.__dict__)
+        cache_data[K_QUOTE_DATUMS].append(dat.__dict__)
     fp = get_stamped_import_path()
     if not fp.parent.exists():
         perm = 0o755
@@ -73,7 +76,7 @@ def cache_url_type_one(
 ) -> Union[str, bool]:
     """Cache quote data from url."""
     cache_data = {}
-    cache_data["url"] = url
+    cache_data[KEY_URL] = url
     cache_data["author"] = author
     cache_data["category"] = category
     if scrapeopts:
@@ -81,7 +84,7 @@ def cache_url_type_one(
             url="https://proxy.scrapeops.io/v1/",
             params={
                 "api_key": settings.config.get("scrapeops_api_key", ""),
-                "url": url,
+                KEY_URL: url,
             },
             timeout=SCRAPEOPS_TIMEOUT,
         )
@@ -100,3 +103,30 @@ def cache_url_type_one(
             os.close(cache)
             return name
     return False
+
+
+def process_cached(source: str) -> Tuple[QdataList, str]:  # noqa: WPS210 C901 WPS231
+    """Process cached quotes."""
+    cdata: StrAnyDict
+    with open(Path(source)) as json_file:
+        cdata = json.load(json_file)
+
+    if K_QUOTE_DATUMS in cdata:
+        datums: QdataList = []
+        for dat in cdata.get(K_QUOTE_DATUMS, []):
+            datums.append(Quote(dat))
+        return datums, source
+    for key in (KEY_URL, "author", "category", "html"):
+        if key not in cdata:
+            raise KeyError("Missing required key: {0}".format(key))
+
+    site = is_known_url(cast(str, cdata.get(KEY_URL)))
+    fruit: QdataList = []
+    if site == Qsites.inspiring_quotes:
+        fruit = scrape_inspiring_quotes(cdata)
+    elif site == Qsites.inspiring_qod:
+        fruit = scrape_inspiring_qod(cdata)
+    elif site == Qsites.brainy_qod:
+        fruit = scrape_brainy_qod(cdata)
+    cfn = cache_datums(fruit)
+    return fruit, cfn

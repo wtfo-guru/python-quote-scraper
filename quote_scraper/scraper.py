@@ -3,10 +3,9 @@
 from pathlib import Path
 from typing import List, Tuple, Union
 
-from quote_scraper.cache import cache_url
+from quote_scraper.cache import cache_url, process_cached
 from quote_scraper.errors import QuoteScrapeImportError, raise_fnfe
 from quote_scraper.files import get_import_path
-from quote_scraper.process import process_cached
 from quote_scraper.quote import QdataList
 from quote_scraper.validate import url_validator
 

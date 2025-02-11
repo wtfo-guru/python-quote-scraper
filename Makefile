@@ -3,6 +3,7 @@ SHELL:=/usr/bin/env bash
 PROJECT_NAME ?= $(shell basename $$(git rev-parse --show-toplevel) | sed -e "s/^python-//")
 PACKAGE_DIR ?= $(shell echo $(PROJECT_NAME) | tr "-" "_")
 PROJECT_VERSION ?= $(shell grep ^current_version .bumpversion.cfg | awk '{print $$NF'} | tr '-' '.')
+WHEEL = $(PACKAGE_DIR)-$(PROJECT_VERSION)-py3-none-any.whl
 TEST_MASK = tests/*.py
 GITHUB_ORG ?= wtf-guru
 
@@ -60,7 +61,8 @@ publish-test: clean-build test
 build: clean-build test
 	manage-tag.sh -u v$(PROJECT_VERSION)
 	poetry build
-	sync-wheels.sh dist/$(PACKAGE_DIR)-$(PROJECT_VERSION)-py3-none-any.whl
+	sync-wheels.sh dist/$(WHEEL)
+	ssh lam ln -s /var/www/html/privy/wheels/$(WHEEL) /var/www/vhosts/flatpress-1.3.1/files/wheels/$(WHEEL)
 
 .PHONY: docs
 docs:
