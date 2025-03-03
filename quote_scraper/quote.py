@@ -14,8 +14,8 @@ class Quote:  # noqa: WPS230
     used: int
     author: str
     category: str
-    reference: str
     quote: str
+    reference: str
     julian: Optional[int]
     blessed: bool
 
@@ -33,6 +33,25 @@ class Quote:  # noqa: WPS230
         self.quote = re.sub(r"\s*[–]$", "", self.quote)
         self.julian = posted.get("julian")
         self.blessed = self.strtobool(posted.get("blessed", "no"))
+
+    def __repr__(self) -> str:
+        """Return a string representation of the Quote."""
+        return str(self.to_dict())
+
+    def to_dict(self) -> dict[str, Union[str, int, bool]]:
+        """Return a dictionary representation of the Quote."""
+        dv: dict[str, Union[str, int, bool]] = {
+            "quote_id": self.qid,
+            "used_cnt": self.used,
+            "author": self.author,
+            "category": self.category,
+            "reference": self.reference,
+            "quote": self.quote,
+            "blessed": self.blessed,
+        }
+        if self.julian:
+            dv["julian"] = int(self.julian)
+        return dv
 
     def strtobool(self, rts: Union[str, bool]) -> bool:
         """Covert string rts to boolean."""

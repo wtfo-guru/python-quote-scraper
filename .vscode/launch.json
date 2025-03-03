@@ -1,0 +1,12 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Brainy process qod",
+            "type": "debugpy",
+            "request": "launch",
+            "module": "quote_scraper.process",
+            "args": ["-f", "./tests/data/cached-brainy-qod.json"]
+        }
+    ]
+}

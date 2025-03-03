@@ -11,7 +11,7 @@ from quote_scraper.kinds import StrAnyDict
 from quote_scraper.quote import QdataList, Quote
 from quote_scraper.settings import settings
 
-RE_DISPLAY = re.compile("^RE_DISPLAY:")
+RE_DISPLAY = re.compile("^display:")
 RE_QOD = re.compile("Quote of the Day", re.IGNORECASE)
 
 
@@ -22,7 +22,7 @@ def _extract_category(q_post: StrAnyDict, div: Tag) -> None:
             RE_QOD.sub("", category.get_text()).strip().replace("Funny", "Humor")
         )
         settings.logger.debug("category: {0}".format(q_post[KCATEGORY]))
-    if not q_post[KCATEGORY]:
+    if KCATEGORY not in q_post:
         q_post[KCATEGORY] = "None"
 
 
@@ -55,12 +55,12 @@ def scrape_brainy_qod(cdata: Dict[str, str]) -> QdataList:  # noqa: WPS210 WPS23
             q_post: StrAnyDict = {}
             _extract_category(q_post, div)
             if not _extract_quote(q_post, div):
-                settings.logger.warn(
+                settings.logger.warning(
                     "Scrape quote number {0} failed.".format(quotes_nbr),
                 )
                 continue
             if not _extract_author(q_post, div):
-                settings.logger.warn(
+                settings.logger.warning(
                     "Scrape author number {0} failed.".format(quotes_nbr),
                 )
                 continue

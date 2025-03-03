@@ -1,7 +1,7 @@
 [tool.poetry]
 name = "quote-scraper"
 description = "A tool to scrape quotes from web pages"
-version = "0.1.1"
+version = "0.1.2-dev3"
 license = "MIT"
 
 authors = ["Quien Sabe <qs5779@mail.com>"]
@@ -29,6 +29,7 @@ classifiers = [
 
 [tool.poetry.scripts]
 qscrape = "quote_scraper.cli:main"
+qcached = "quote_scraper.process:main"
 
 [tool.poetry.dependencies]
 python = ">=3.10,<4.0"
@@ -36,13 +37,14 @@ click = "^8.1.0"
 loguru = "^0.7.2"
 pyyaml = "^6.0"
 beautifulsoup4 = "^4.13.3"
+wtforglib = "^1.0.2"
 
 [tool.poetry.group.test]
 optional = true
 
 [tool.poetry.group.test.dependencies]
 mypy = "^1.11"
-wemake-python-styleguide = "^1.0.0"
+wemake-python-styleguide = "^1.0"
 flake8-pytest-style = ">=1.6,<3.0"
 nitpick = "^0.35"
 safety = ">=2.3,<4.0"
@@ -55,13 +57,14 @@ types-pyyaml = "^6.0.12.20240808"
 pytest-click = "^1.1.0"
 doc8 = "^1.0"
 types-requests = "^2.32.0.20240602"
+testfixtures = "^8.3.0"
 
 [tool.poetry.group.docs]
 optional = true
 
 [tool.poetry.group.docs.dependencies]
 sphinx = "^8.0"
-sphinx-autodoc-typehints = ">=1.19,<3.0"
+sphinx-autodoc-typehints = "^3.0"
 m2r2 = "^0.3"
 tomli = "^2.0"
 
