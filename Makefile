@@ -1,9 +1,10 @@
 SHELL:=/usr/bin/env bash
 
-PROJECT_NAME ?= $(shell basename $$(git rev-parse --show-toplevel) | sed -e "s/^python-//")
-PACKAGE_DIR ?= $(shell echo $(PROJECT_NAME) | tr "-" "_")
-PROJECT_VERSION ?= $(shell grep ^current_version .bumpversion.cfg | awk '{print $$NF'} | tr '-' '.')
-WHEEL = $(PACKAGE_DIR)-$(PROJECT_VERSION)-py3-none-any.whl
+PROJECT_NAME = $(shell head -10 pyproject.toml|grep ^name | awk '{print $$NF}'|tr -d '"' | tr '-' '_')
+PROJECT_VERSION = $(shell head -10 pyproject.toml|grep ^version | awk '{print $$NF}'|tr -d '"')
+WHEEL = $(PROJECT_NAME)-$(PROJECT_VERSION)-py3-none-any.whl
+BUMP_VERSION = $(shell grep ^current_version .bumpversion.cfg | awk '{print $$NF}')
+CONST_VERSION = $(shell grep ^VERSION $(PROJECT_NAME)/constants.py | awk '{print $$NF}'|tr -d '"')
 TEST_MASK = tests/*.py
 GITHUB_ORG ?= wtf-guru
 
@@ -15,18 +16,29 @@ update:
 
 vars:
 	@echo "PROJECT_NAME: $(PROJECT_NAME)"
-	@echo "PACKAGE_DIR: $(PACKAGE_DIR)"
 	@echo "PROJECT_VERSION: $(PROJECT_VERSION)"
+	@echo "BUMP_VERSION: $(BUMP_VERSION)"
+	@echo "CONST_VERSION: $(CONST_VERSION)"
+
+.PHONY: version-sanity
+version-sanity:
+ifneq ($(PROJECT_VERSION), $(BUMP_VERSION))
+	$(error Version mismatch PROJECT_VERSION != BUMP_VERSION)
+endif
+ifneq ($(PROJECT_VERSION), $(CONST_VERSION))
+	$(error Version mismatch PROJECT_VERSION != CONST_VERSION)
+endif
+	@echo "Versions are equal $(PROJECT_VERSION), $(BUMP_VERSION), $(CONST_VERSION)"
 
 black:
-	poetry run isort $(PACKAGE_DIR) $(TEST_MASK)
-	poetry run black $(PACKAGE_DIR) $(TEST_MASK)
+	poetry run isort $(PROJECT_NAME) $(TEST_MASK)
+	poetry run black $(PROJECT_NAME) $(TEST_MASK)
 
 mypy: black
-	poetry run mypy $(PACKAGE_DIR) $(TEST_MASK)
+	poetry run mypy $(PROJECT_NAME) $(TEST_MASK)
 
 lint: mypy
-	poetry run flake8 $(PACKAGE_DIR) $(TEST_MASK)
+	poetry run flake8 $(PROJECT_NAME) $(TEST_MASK)
 	poetry run doc8 -q docs
 
 sunit:
@@ -44,22 +56,21 @@ safety:
 	poetry run safety scan --full-report
 
 .PHONY: test
-test: lint package unit
+test: lint package safety unit
 
 .PHONY: ghtest
 ghtest: lint package unit
 
-publish: clean-build test
-	manage-tag.sh -u v$(PROJECT_VERSION)
+publish: version-sanity clean-build test
 	poetry publish --build
-
-publish-test: clean-build test
+	sync-wheels.sh dist/$(WHEEL)
 	manage-tag.sh -u v$(PROJECT_VERSION)
+
+publish-test: version-sanity clean-build test
 	poetry publish --build -r test-pypi
 
 .PHONY: build
-build: clean-build test
-	manage-tag.sh -u v$(PROJECT_VERSION)
+build: version-sanity clean-build test
 	poetry build
 	sync-wheels.sh dist/$(WHEEL)
 	ssh lam ln -s /var/www/html/privy/wheels/$(WHEEL) /var/www/vhosts/flatpress-1.3.1/files/wheels/$(WHEEL)

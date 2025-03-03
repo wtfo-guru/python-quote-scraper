@@ -1,7 +1,7 @@
 [tool.poetry]
 name = "quote-scraper"
 description = "A tool to scrape quotes from web pages"
-version = "0.1.2-dev2"
+version = "0.1.2-dev3"
 license = "MIT"
 
 authors = ["Quien Sabe <qs5779@mail.com>"]
@@ -64,7 +64,7 @@ optional = true
 
 [tool.poetry.group.docs.dependencies]
 sphinx = "^8.0"
-sphinx-autodoc-typehints = ">=1.19,<3.0"
+sphinx-autodoc-typehints = "^3.0"
 m2r2 = "^0.3"
 tomli = "^2.0"
 
