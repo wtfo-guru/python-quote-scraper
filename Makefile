@@ -2,21 +2,21 @@ SHELL:=/usr/bin/env bash
 
 PROJECT_NAME = $(shell head -10 pyproject.toml|grep ^name | awk '{print $$NF}'|tr -d '"' | tr '-' '_')
 PROJECT_VERSION = $(shell head -10 pyproject.toml|grep ^version | awk '{print $$NF}'|tr -d '"')
-WHEEL = $(PROJECT_NAME)-$(PROJECT_VERSION)-py3-none-any.whl
+WHEEL_VERSION = $(shell echo $(PROJECT_VERSION)|sed -e 's/-dev/.dev/')
 BUMP_VERSION = $(shell grep ^current_version .bumpversion.cfg | awk '{print $$NF}')
 CONST_VERSION = $(shell grep ^VERSION $(PROJECT_NAME)/constants.py | awk '{print $$NF}'|tr -d '"')
-TEST_MASK = tests/*.py
-GITHUB_ORG ?= wtf-guru
+TEST_MASK ?= tests/*.py
 
-.PHONY: vars black mypy lint sunit unit package test publish publish-test update
-
+.PHONY: update
 update:
 	poetry update --with test --with docs
 	pre-commit-update-repo.sh
 
+.PHONY: vars
 vars:
 	@echo "PROJECT_NAME: $(PROJECT_NAME)"
 	@echo "PROJECT_VERSION: $(PROJECT_VERSION)"
+	@echo "WHEEL_VERSION: $(WHEEL_VERSION)"
 	@echo "BUMP_VERSION: $(BUMP_VERSION)"
 	@echo "CONST_VERSION: $(CONST_VERSION)"
 
@@ -30,50 +30,63 @@ ifneq ($(PROJECT_VERSION), $(CONST_VERSION))
 endif
 	@echo "Versions are equal $(PROJECT_VERSION), $(BUMP_VERSION), $(CONST_VERSION)"
 
+.PHONY: black
 black:
 	poetry run isort $(PROJECT_NAME) $(TEST_MASK)
 	poetry run black $(PROJECT_NAME) $(TEST_MASK)
 
+.PHONY: mypy
 mypy: black
 	poetry run mypy $(PROJECT_NAME) $(TEST_MASK)
 
+.PHONY: lint
 lint: mypy
 	poetry run flake8 $(PROJECT_NAME) $(TEST_MASK)
 	poetry run doc8 -q docs
 
+.PHONY: sunit
 sunit:
 	poetry run pytest -s tests
 
+.PHONY: unit
 unit:
 	poetry run pytest tests
 
+.PHONY: package
 package:
-	poetry check
+	poetry check --strict
 	poetry run pip check
+
+.PHONY: publish
+publish: build
+	manage-tag.sh -u v$(PROJECT_VERSION)
+	gh release create v$(PROJECT_VERSION) --generate-notes
+	poetry publish
+
+.PHONY: publish-test
+publish-test: build
+	poetry publish -r test-pypi
 
 .PHONY: safety
 safety:
 	poetry run safety scan --full-report
 
+.PHONY: nitpick
+nitpick:
+	poetry run nitpick -p . check
+
 .PHONY: test
-test: lint package safety unit
+test: nitpick lint package unit
 
 .PHONY: ghtest
 ghtest: lint package unit
 
-publish: version-sanity clean-build test
-	poetry publish --build
-	sync-wheels.sh dist/$(WHEEL)
-	manage-tag.sh -u v$(PROJECT_VERSION)
-
-publish-test: version-sanity clean-build test
-	poetry publish --build -r test-pypi
-
 .PHONY: build
-build: version-sanity clean-build test
+build: version-sanity safety clean-build test
 	poetry build
-	sync-wheels.sh dist/$(WHEEL)
-	ssh lam ln -s /var/www/html/privy/wheels/$(WHEEL) /var/www/vhosts/flatpress-1.3.1/files/wheels/$(WHEEL)
+ifdef SYNCH_WHEELS
+	sync-wheels.sh dist/$(PROJECT_NAME)-$(WHEEL_VERSION)-py3-none-any.whl $(WHEELS)
+endif
 
 .PHONY: docs
 docs:
@@ -104,4 +117,4 @@ clean-test: ## remove test and coverage artifacts
 	rm -fr .mypy_cache
 	rm -fr .cache
 
-# vim:noet:sw=2:ts=2:syntax=make
+# vim: ft=Makefile

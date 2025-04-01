@@ -1,6 +1,6 @@
 # quote-scraper
 
-[![Build Status](https://github.com/wtfo-guru/quote-scraper/workflows/test/badge.svg?branch=master&event=push)](https://github.com/wtfo-guru/quote-scraper/actions?query=workflow%3Atest)
+[![Build Status](https://github.com/wtfo-guru/quote-scraper/workflows/test/badge.svg)](https://github.com/wtfo-guru/quote-scraper/actions?query=workflow%3Atest)
 [![codecov](https://codecov.io/gh/wtfo-guru/quote-scraper/branch/master/graph/badge.svg)](https://codecov.io/gh/wtfo-guru/quote-scraper)
 [![Python Version](https://img.shields.io/pypi/pyversions/quote-scraper.svg)](https://pypi.org/project/quote-scraper/)
 [![wemake-python-styleguide](https://img.shields.io/badge/style-wemake-000000.svg)](https://github.com/wemake-services/wemake-python-styleguide)
