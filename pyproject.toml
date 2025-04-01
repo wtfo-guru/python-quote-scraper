@@ -1,16 +1,29 @@
-[tool.poetry]
+[project]
 name = "quote-scraper"
 description = "A tool to scrape quotes from web pages"
-version = "0.1.2-dev3"
 license = "MIT"
-
-authors = ["Quien Sabe <qs5779@mail.com>"]
-
+keywords = []
+version = "0.1.2-dev4"
+dynamic = ["classifiers"]
 readme = "README.md"
+authors = [{name = "Quien Sabe", email = "qs5779@mail.com"}]
+requires-python = '>=3.10,<4.0'
+dependencies = [
+  'click (>=8.1.0,<9.0.0)',
+  'loguru (>=0.7.2,<0.8.0)',
+  'pyyaml (>=6.0,<7.0)',
+  'beautifulsoup4 (>=4.13.3,<5.0.0)',
+  'wtforglib (>=1.0.2,<2.0.0)'
+]
 
+[project.urls]
 repository = "https://github.com/wtfo-guru/quote-scraper"
 
-keywords = []
+[project.scripts]
+qscrape = "quote_scraper.cli:main"
+qcached = "quote_scraper.process:main"
+
+[tool.poetry]
 
 classifiers = [
   "Development Status :: 3 - Alpha",
@@ -26,18 +39,6 @@ classifiers = [
   "Topic :: Utilities",
   "Typing :: Typed",
 ]
-
-[tool.poetry.scripts]
-qscrape = "quote_scraper.cli:main"
-qcached = "quote_scraper.process:main"
-
-[tool.poetry.dependencies]
-python = ">=3.10,<4.0"
-click = "^8.1.0"
-loguru = "^0.7.2"
-pyyaml = "^6.0"
-beautifulsoup4 = "^4.13.3"
-wtforglib = "^1.0.2"
 
 [tool.poetry.group.test]
 optional = true
@@ -65,7 +66,7 @@ optional = true
 [tool.poetry.group.docs.dependencies]
 sphinx = "^8.0"
 sphinx-autodoc-typehints = "^3.0"
-m2r2 = "^0.3"
+sphinx_mdinclude = "^0.6.2"
 tomli = "^2.0"
 
 [build-system]

@@ -56,7 +56,7 @@ extensions = [
     'sphinx.ext.napoleon',
 
     # Used to include .md files:
-    'm2r2',
+    'sphinx_mdinclude',
 
     # Used to insert typehints into the final docs:
     'sphinx_autodoc_typehints',
